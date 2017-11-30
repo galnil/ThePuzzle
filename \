@@ -12,7 +12,7 @@ class WrongUserName(Exception):
 	pass
 
 def usage():
-	print('usage: python [file] [user_name] [password]')
+	print('usage: [file] [user_name] [password]')
 	sys.exit(1)
 
 def first_enter():
@@ -51,7 +51,7 @@ class BlackBox(object):
 				except ValueError:
 					print('file {} does not contain "user_name:"'.format(self.input_file))
 					sys.exit(1)
-				try:
+                                try:
 					file_password = list_line[list_line.index('password:') + 1]
 				except ValueError:
 					print('file {} does not contain "password:"'.format(self.input_file))
@@ -72,17 +72,13 @@ class BlackBox(object):
 			if self.entered_password != self.file_password:
 				raise(WorngPassword)
 		except WrongUserName:
-				print('wrong user name')
+					print('wrong user name')
 				sys.exit(1)
 		except WorngPassword:
 			print('wrong password')
 			sys.exit(1)	
 		self.insaide = True
 		print('you have the first stage\ncongradulation!!!!!!!!')
-		subprocess.Popen(['xdg-open', './congradulations.jpg']).wait()
+		subprocess.Popen(['xdg-open', '~/projects/maze/congradulations.jpg']).wait()
 		sys.exit(0)
-if __name__ == '__main__':
-	input_file, entered_user_name, entered_password = first_enter()
-	box = BlackBox(input_file, entered_user_name, entered_password)
-	box.get_user_name_and_password()
-	box.get_into_the_system()
+		
