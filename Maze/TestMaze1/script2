@@ -1,0 +1,75 @@
+#!/bin/bash
+if [ $# -lt 3 ]
+then 
+	echo usage: [file] [user_name] [password]
+else
+	echo ""
+	echo user input: $1 $2 $3
+	echo ""
+	file=$(cat $1)
+	if [ "$?" = "0" ]
+	then
+		echo --------------------------- inside username clause
+		echo ""
+		echo input_file $1 accessed
+		file_username=$(echo -e "$file" | grep "username:" | cut -d" " -f2) 
+		echo file_username from $1: $file_username
+		echo ""
+
+
+		if [ "$?" = "0" ] && [ "$file_username" != "" ]
+		then 
+			echo --------------------------- inside password clause
+			echo ""
+			file_password=$(echo -e "$file" | grep "password:" | cut -d" " -f2)
+
+			
+			if [ "$?" = "0" ] && [ "$file_password" != "" ]
+			then 
+				echo file_password from $1: $file_password
+				echo file_username and file_password exist
+				echo ""
+				echo -------------------------
+				echo file_username: $file_username, input_username: $2
+				echo "&&"
+				echo file_password: $file_password, input_password: $3
+				echo ------------------------- 
+				echo ""
+
+				
+				if [ "$file_username" = "$2" ]
+				then
+
+
+					if [ "$file_password" = "$3" ] 
+					then 
+						echo congradulations!
+						eog -f congradulations.jpg
+						exit $?
+					else
+						echo error: passwords do not match 
+						echo try again
+					fi 
+				else	
+					echo error: usernames do not match
+					echo try again
+				fi
+ 		
+			else
+				echo error:
+				echo password is null
+				echo file_password: $file_password
+			
+			fi
+		else 
+			echo error:
+			echo username is null
+			echo file_username: $file_username
+		fi			
+		
+	else 
+		echo where the file at 
+	fi
+
+fi
+

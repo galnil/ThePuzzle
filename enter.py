@@ -1,14 +1,14 @@
-""" handle the entering to the maze"""
+" handle the entering to the maze"""
 import sys
 import re
 import subprocess
 
-class WorngPassword(Exception):
+class WrongPassword(Exception):
 	"""wrong password"""
 	pass	
 
 class WrongUserName(Exception):
-	"""worng user name"""
+	"""wrong user name"""
 	pass
 
 def usage():
@@ -17,7 +17,7 @@ def usage():
 
 def first_enter():
 	"""
-	check if the user run the program with the correct parameters, if doesnt, the program exits and usage message is printed
+	check if the user run the program with the correct parameters, if not, the program exits and usage message is printed
 	"""
 	try:
 		input_file, entered_user_name, entered_password = tuple(sys.argv[1:])
@@ -70,11 +70,11 @@ class BlackBox(object):
 			if self.entered_user_name != self.file_user_name:
 				raise(WrongUserName)
 			if self.entered_password != self.file_password:
-				raise(WorngPassword)
+				raise(WrongPassword)
 		except WrongUserName:
 				print('wrong user name')
 				sys.exit(1)
-		except WorngPassword:
+		except WrongPassword:
 			print('wrong password')
 			sys.exit(1)	
 		self.insaide = True

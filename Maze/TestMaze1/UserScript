@@ -1,0 +1,59 @@
+#!/bin/bash
+if [ $# -lt 3 ]
+then 
+	echo usage: [file] [username] [password]
+else
+	echo ""
+	echo Your input: $1 $2 $3
+	echo ""
+	file=$(cat $1)
+	if [ "$?" = "0" ]
+	then
+		file_username=$(echo -e "$file" | grep "username:" | cut -d" " -f2) 
+
+		if [ "$?" = "0" ] && [ "$file_username" != "" ]
+		then
+
+			file_password=$(echo -e "$file" | grep "password:" | cut -d" " -f2)
+			
+			if [ "$?" = "0" ] && [ "$file_password" != "" ]
+			then 
+	
+				if [ "$file_username" = "$2" ]
+				then
+
+					if [ "$file_password" = "$3" ] 
+					then 
+						echo congradulations!
+						echo ""
+						eog -f congradulations.jpg
+						exit $?
+					else
+						echo Error:
+						echo Passwords do not match 
+						echo Try again
+					fi 
+				else	
+					echo Error:
+					echo Usernames do not match
+					echo try again
+				fi
+ 		
+			else
+				echo Error:
+				echo Password is null
+				echo Try again
+				
+			
+			fi
+		else 
+			echo Error:
+			echo Username is null
+		fi			
+		
+	else 
+		echo could not read $1
+	fi
+
+fi
+
